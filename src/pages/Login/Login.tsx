@@ -1,15 +1,8 @@
-import logo from "../../assets/img/logo-login.png";
+import logo from "../../assets/img/favorites-logo.png";
 import { GeneralButton, Input } from "../../components";
-import {
-  Footer,
-  FormBody,
-  Header,
-  Image,
-  LoginForm,
-  Main,
-  Text,
-  Title,
-} from "./styles";
+import { Footer, FormBody, Header, Image, Main, Text, Title } from "./styles";
+
+import { LoginForm } from "./styles";
 
 export const Login = () => {
   return (

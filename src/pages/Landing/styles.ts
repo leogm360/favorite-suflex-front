@@ -53,6 +53,10 @@ export const Text = styled.p`
 `;
 
 export const ButtonsContainer = styled.div`
+  button {
+    background: var(--color-primary);
+  }
+
   button + button {
     margin-left: 2rem;
   }
