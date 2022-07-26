@@ -12,11 +12,12 @@ export const RootStyles = createGlobalStyle`
         --grey-4: #121214;
         --success: #3FE864;
         --negative: #E83F5B;
-        --title-1: bold 1rem 'Inter', sans-serif;
-        --title-2: bold 1.25rem 'Inter', sans-serif;
-        --title-3: bold 1.5rem 'Inter', sans-serif;
-        --title-4: bold 2rem 'Inter', sans-serif;
-        --body-text: normal 0.75rem 'Poppins', sans-serif;
+        --title-1: bold 1rem 'Inter';
+        --title-2: bold 1.25rem 'Inter';
+        --title-3: bold 1.5rem 'Inter';
+        --title-4: bold 2rem 'Inter';
+        --helper-text: normal 0.85rem 'Poppins';
+        --body-text: normal 0.75rem 'Poppins';
 
         //WARNING: OVERRIDES TOASTFY DEFAULT COLOR BEHAVIOR
         --toastify-color-dark: var(--grey-2);
