@@ -1,6 +1,7 @@
 import { ApolloProvider } from "@apollo/client";
 import { ReactNode } from "react";
 import { rickAndMortyClient } from "../services";
+import { GlobalStyles, ResetStyles, RootStyles } from "../styles";
 
 interface IChildren {
   children: ReactNode;
@@ -8,6 +9,12 @@ interface IChildren {
 
 export const GlobalProvider = ({ children }: IChildren) => {
   return (
-    <ApolloProvider client={rickAndMortyClient}>{children}</ApolloProvider>
+    <ApolloProvider client={rickAndMortyClient}>
+      <ResetStyles />
+      <RootStyles />
+      <GlobalStyles />
+
+      {children}
+    </ApolloProvider>
   );
 };
