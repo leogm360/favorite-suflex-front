@@ -1,4 +1,4 @@
-import { createGlobalStyle } from "styled-components";
+import styled, { createGlobalStyle } from "styled-components";
 
 export const GlobalStyles = createGlobalStyle`
     body {
@@ -9,18 +9,10 @@ export const GlobalStyles = createGlobalStyle`
     button{
       cursor: pointer;
     }
+`;
 
-    .lg-container {
-      width: 100%;
-      max-width: 1200px;
-    }
-
-    .flex{
-      display: flex;
-    }
-
-    .flex-col{
-      flex-direction: column;
-    }
-
+export const GenericContainer = styled.div`
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
 `;
