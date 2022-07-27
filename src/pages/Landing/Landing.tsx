@@ -1,4 +1,6 @@
+import logo from "../../assets/img/landing-logo.png";
 import { GeneralButton } from "../../components";
+import { Link } from "../../styles";
 import {
   ButtonsContainer,
   Image,
@@ -9,8 +11,6 @@ import {
   Text,
   Title,
 } from "./styles";
-
-import logo from "../../assets/img/logo.png";
 
 export const Landing = () => {
   return (
@@ -29,9 +29,17 @@ export const Landing = () => {
           </InfoContainer>
 
           <ButtonsContainer>
-            <GeneralButton>Login</GeneralButton>
+            <Link to="/login">
+              <GeneralButton>Login</GeneralButton>
+            </Link>
 
-            <GeneralButton>Personagens</GeneralButton>
+            <Link to="/register">
+              <GeneralButton>Cadastrar</GeneralButton>
+            </Link>
+
+            <Link to="/home">
+              <GeneralButton>Personagens</GeneralButton>
+            </Link>
           </ButtonsContainer>
         </Main>
       </InnerContainer>

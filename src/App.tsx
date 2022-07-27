@@ -1,9 +1,9 @@
-import { Home } from "./pages";
+import { Router } from "./routes";
 
 const App = () => {
   return (
     <>
-      <Home />
+      <Router />
     </>
   );
 };

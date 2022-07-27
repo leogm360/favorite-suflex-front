@@ -1,3 +1,4 @@
+import { Link as ReactRouterLink } from "react-router-dom";
 import styled, { createGlobalStyle } from "styled-components";
 
 export const GlobalStyles = createGlobalStyle`
@@ -15,4 +16,12 @@ export const GenericContainer = styled.div`
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
+`;
+
+export const Link = styled(ReactRouterLink)`
+  color: inherit;
+
+  :visited {
+    color: inherit;
+  }
 `;

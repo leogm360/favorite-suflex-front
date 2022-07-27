@@ -1,5 +1,6 @@
 import logo from "../../assets/img/favorites-logo.png";
 import { GeneralButton, Input } from "../../components";
+import { Link } from "../../styles";
 import {
   Footer,
   FormBody,
@@ -43,8 +44,9 @@ export const Register = () => {
 
         <Footer>
           <Text>Já possui uma conta?</Text>
-
-          <GeneralButton>Fazer Login!</GeneralButton>
+          <Link to="/login">
+            <GeneralButton>Fazer Login!</GeneralButton>
+          </Link>
         </Footer>
       </RegisterForm>
     </Main>

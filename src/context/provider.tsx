@@ -1,5 +1,6 @@
 import { ApolloProvider } from "@apollo/client";
 import { ReactNode } from "react";
+import { BrowserRouter } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import { rickAndMortyClient } from "../services";
 import { GlobalStyles, ResetStyles, RootStyles } from "../styles";
@@ -17,7 +18,7 @@ export const GlobalProvider = ({ children }: IChildren) => {
 
       <ToastContainer style={{ padding: "1rem" }} />
 
-      {children}
+      <BrowserRouter>{children}</BrowserRouter>
     </ApolloProvider>
   );
 };

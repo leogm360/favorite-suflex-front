@@ -6,7 +6,11 @@ export const Main = styled.main`
   justify-content: center;
   align-items: center;
   background: var(--color-tertiary);
-  padding: 3rem 1rem;
+
+  @media only screen and (min-width: 1024px) {
+    min-height: 100vh;
+    padding: 0rem;
+  }
 `;
 
 export const Image = styled.img`

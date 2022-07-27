@@ -17,6 +17,7 @@ export const Main = styled.main`
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
   height: 100vh;
 
   gap: 4rem;
@@ -53,11 +54,18 @@ export const Text = styled.p`
 `;
 
 export const ButtonsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1rem 0;
+  text-align: center;
+
   button {
     background: var(--color-primary);
   }
 
-  button + button {
-    margin-left: 2rem;
+  @media only screen and (min-width: 680px) {
+    flex-direction: row;
+    gap: 0 2.5rem;
   }
 `;

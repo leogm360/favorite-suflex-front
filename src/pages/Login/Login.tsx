@@ -1,8 +1,16 @@
 import logo from "../../assets/img/favorites-logo.png";
 import { GeneralButton, Input } from "../../components";
-import { Footer, FormBody, Header, Image, Main, Text, Title } from "./styles";
-
-import { LoginForm } from "./styles";
+import { Link } from "../../styles";
+import {
+  Footer,
+  FormBody,
+  Header,
+  Image,
+  LoginForm,
+  Main,
+  Text,
+  Title,
+} from "./styles";
 
 export const Login = () => {
   return (
@@ -20,7 +28,9 @@ export const Login = () => {
         <Footer>
           <Text>Ainda não tem cadastro?</Text>
 
-          <GeneralButton>Cadastrar!</GeneralButton>
+          <Link to="/register">
+            <GeneralButton>Cadastrar!</GeneralButton>
+          </Link>
         </Footer>
       </LoginForm>
     </Main>
