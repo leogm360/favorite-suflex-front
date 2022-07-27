@@ -1,15 +1,17 @@
-import { useQuery } from "@apollo/client";
 import { useState } from "react";
 import { AiFillCaretLeft, AiFillCaretRight } from "react-icons/ai";
 import { toast } from "react-toastify";
 import { CharactersList, Header, IconButton, Loader } from "../../components";
-import { getCharacters } from "../../querys";
+import { useClient } from "../../contexts";
+import { getCharacters } from "../../gql";
 import { ButtonsContainer, Main } from "./styles";
 
 export const Home = () => {
   const [page, setPage] = useState(1);
 
-  const { loading, error, data } = useQuery(getCharacters, {
+  const { request } = useClient("rick");
+
+  const { data, error, loading } = request(getCharacters, {
     variables: { page },
   });
 
