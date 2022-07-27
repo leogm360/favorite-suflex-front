@@ -1,19 +1,37 @@
-import { Container, HelperText, InputField, Label } from "./styles";
+import { forwardRef, InputHTMLAttributes } from "react";
+import {
+  Container,
+  Dash,
+  Error,
+  HelperText,
+  InputField,
+  Label,
+  TopContainer,
+} from "./styles";
 
-interface IInput {
+interface IInput extends InputHTMLAttributes<HTMLInputElement> {
   label: string;
   helper?: string;
+  error?: any;
   placeholder?: string;
 }
 
-export const Input = ({ label, helper, placeholder }: IInput) => {
-  return (
-    <Container>
-      <Label>{label}</Label>
+export const Input = forwardRef(
+  ({ label, helper, error, ...rest }: IInput, ref) => {
+    return (
+      <Container>
+        <TopContainer>
+          <Label htmlFor={rest.id}>{label}</Label>
 
-      <InputField placeholder={placeholder} />
+          {error && <Dash> - </Dash>}
 
-      <HelperText>{helper}</HelperText>
-    </Container>
-  );
-};
+          {error && <Error>{error}</Error>}
+        </TopContainer>
+
+        {/* @ts-ignore*/}
+        <InputField {...rest} ref={ref} />
+        <HelperText>{helper}</HelperText>
+      </Container>
+    );
+  }
+);

@@ -9,9 +9,9 @@ import { ButtonsContainer, Main } from "./styles";
 export const Home = () => {
   const [page, setPage] = useState(1);
 
-  const { request } = useClient("rick");
+  const { query } = useClient("rick");
 
-  const { data, error, loading } = request(getCharacters, {
+  const { data, error, loading } = query(getCharacters, {
     variables: { page },
   });
 

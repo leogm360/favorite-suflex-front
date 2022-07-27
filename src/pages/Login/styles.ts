@@ -62,6 +62,10 @@ export const FormBody = styled.div`
 export const Footer = styled.footer`
   text-align: center;
   margin-top: 1.5rem;
+
+  & > button {
+    margin-bottom: 2.5rem;
+  }
 `;
 
 export const Text = styled.p`

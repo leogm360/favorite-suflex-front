@@ -6,8 +6,17 @@ export const Container = styled.div`
   gap: 0.5rem;
 `;
 
+export const TopContainer = styled.div``;
+
 export const Label = styled.label`
   font: var(--body-text);
+`;
+
+export const Dash = styled.span``;
+
+export const Error = styled.strong`
+  font-size: 0.75rem;
+  color: var(--negative);
 `;
 
 export const InputField = styled.input`
