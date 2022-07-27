@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
 import headerLogo from "../../assets/img/favorites-logo.png";
-import { GenericContainer } from "../../styles";
+import { GenericContainer, Link } from "../../styles";
 import { IconButton } from "../Buttons/IconButton/IconButton";
 import {
   HeaderContainer,
@@ -30,10 +30,18 @@ export const Header = () => {
           {isOpen && (
             <Menu>
               <MenuList>
-                <MenuItem>Login</MenuItem>
-                <MenuItem>Cadastrar</MenuItem>
-                <MenuItem>Landing</MenuItem>
-                <MenuItem>Favoritos</MenuItem>
+                <MenuItem>
+                  <Link to="/">Landing</Link>
+                </MenuItem>
+                <MenuItem>
+                  <Link to="/login">Login</Link>
+                </MenuItem>
+                <MenuItem>
+                  <Link to="/register">Cadastrar</Link>
+                </MenuItem>
+                <MenuItem>
+                  <Link to="/favorites">Favoritos</Link>
+                </MenuItem>
               </MenuList>
             </Menu>
           )}

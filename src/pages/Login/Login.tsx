@@ -8,31 +8,42 @@ import {
   Image,
   LoginForm,
   Main,
+  Section,
   Text,
   Title,
+  TopContainer,
 } from "./styles";
 
 export const Login = () => {
   return (
     <Main>
-      <Image src={logo} />
-      <LoginForm action="">
-        <Header>
-          <Title>Login</Title>
-        </Header>
-        <FormBody>
-          <Input label="Email" helper="exemplo: nome@email.com" />
+      <Section>
+        <TopContainer>
+          <Image src={logo} />
 
-          <Input label="Senha" helper="exemplo: 134679$%Test" />
-        </FormBody>
-        <Footer>
-          <Text>Ainda não tem cadastro?</Text>
-
-          <Link to="/register">
-            <GeneralButton>Cadastrar!</GeneralButton>
+          <Link to="/">
+            <GeneralButton>Voltar</GeneralButton>
           </Link>
-        </Footer>
-      </LoginForm>
+        </TopContainer>
+
+        <LoginForm action="">
+          <Header>
+            <Title>Login</Title>
+          </Header>
+          <FormBody>
+            <Input label="Email" helper="exemplo: nome@email.com" />
+
+            <Input label="Senha" helper="exemplo: 134679$%Test" />
+          </FormBody>
+          <Footer>
+            <Text>Ainda não tem cadastro?</Text>
+
+            <Link to="/register">
+              <GeneralButton>Cadastrar!</GeneralButton>
+            </Link>
+          </Footer>
+        </LoginForm>
+      </Section>
     </Main>
   );
 };

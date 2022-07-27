@@ -9,21 +9,32 @@ export const Main = styled.main`
   padding: 3rem 1rem;
 `;
 
+export const Section = styled.section``;
+
+export const TopContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+`;
+
 export const Image = styled.img`
-  width: 15rem;
+  width: 150px;
   height: auto;
-  margin-bottom: 20px;
 `;
 
 export const RegisterForm = styled.form`
   background: var(--color-primary);
   border: 2.5px;
   border-radius: 5px;
-  width: 100%;
-  max-width: 350px;
+  width: 300px;
   padding: 1rem;
   box-shadow: 0px 16.6px 30.1px rgba(0, 0, 0, 0.037),
     0px 43px 240px rgba(0, 0, 0, 0.07);
+
+  @media only screen and (min-width: 1024px) {
+    width: 350px;
+  }
 `;
 
 export const Header = styled.header`

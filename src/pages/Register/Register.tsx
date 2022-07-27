@@ -8,47 +8,61 @@ import {
   Image,
   Main,
   RegisterForm,
+  Section,
   Text,
   Title,
+  TopContainer,
 } from "./styles";
 
 export const Register = () => {
   return (
     <Main>
-      <Image src={logo} />
+      <Section>
+        <TopContainer>
+          <Image src={logo} />
 
-      <RegisterForm>
-        <Header>
-          <Title>Register</Title>
-        </Header>
-
-        <FormBody>
-          <Input label="Nome" helper="Jhon Doe" placeholder="Digite seu nome" />
-
-          <Input
-            label="Email"
-            helper="exemplo: jhon.doe@email.com"
-            placeholder="Diginte o seu email"
-          />
-
-          <Input label="Confirmar email" placeholder="Confirme o seu email" />
-
-          <Input
-            label="Senha"
-            helper="134679$%Doe"
-            placeholder="Digite sua senha"
-          />
-
-          <Input label="Confirmar senha" placeholder="Confirme sua senha" />
-        </FormBody>
-
-        <Footer>
-          <Text>Já possui uma conta?</Text>
-          <Link to="/login">
-            <GeneralButton>Fazer Login!</GeneralButton>
+          <Link to="/">
+            <GeneralButton>Voltar</GeneralButton>
           </Link>
-        </Footer>
-      </RegisterForm>
+        </TopContainer>
+
+        <RegisterForm>
+          <Header>
+            <Title>Register</Title>
+          </Header>
+
+          <FormBody>
+            <Input
+              label="Nome"
+              helper="Jhon Doe"
+              placeholder="Digite seu nome"
+            />
+
+            <Input
+              label="Email"
+              helper="exemplo: jhon.doe@email.com"
+              placeholder="Diginte o seu email"
+            />
+
+            <Input label="Confirmar email" placeholder="Confirme o seu email" />
+
+            <Input
+              label="Senha"
+              helper="134679$%Doe"
+              placeholder="Digite sua senha"
+            />
+
+            <Input label="Confirmar senha" placeholder="Confirme sua senha" />
+          </FormBody>
+
+          <Footer>
+            <Text>Já possui uma conta?</Text>
+            <Link to="/login">
+              <GeneralButton>Fazer Login!</GeneralButton>
+            </Link>
+          </Footer>
+        </RegisterForm>
+      </Section>
     </Main>
   );
 };
