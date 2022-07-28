@@ -1,6 +1,6 @@
-//Setup jest-dom matachers as globals
+//Setup jest-dom matchers as globals
 import "@testing-library/jest-dom";
 
-//Setup act to test environment
+//Setup react act environment to test
 // @ts-ignore
 globalThis.IS_REACT_ACT_ENVIRONMENT = true;

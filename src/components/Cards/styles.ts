@@ -62,6 +62,10 @@ export const ButtonsCardContainer = styled.div`
   display: flex;
   justify-content: space-between;
 
+  & .button_fav {
+    color: red;
+  }
+
   button {
     font-size: 1.5rem;
   }

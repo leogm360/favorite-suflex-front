@@ -2,6 +2,10 @@ import { GenericContainer } from "../../styles";
 import { CharacterCard } from "../Cards/CharacterCard";
 import { List } from "./styles";
 
+interface IEpisode {
+  id: string;
+}
+
 export interface ICharacter {
   id: number;
   name: string;
@@ -9,18 +13,17 @@ export interface ICharacter {
   species: string;
   type: string;
   origin: {
-    id: number;
+    id: string;
     name: string;
   };
   location: {
-    id: number;
+    id: string;
     name: string;
   };
   image: string;
-  episode: {
-    id: number;
-  };
+  episode: IEpisode[];
   gender: string;
+  url: string;
   created: string;
 }
 

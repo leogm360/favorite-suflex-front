@@ -6,16 +6,28 @@ interface IAuthProvider {
 
 interface IAuthContext {
   token: string;
+  isAuth: boolean;
+  setAuthToken: (tokenToSet: string) => void;
 }
 
 export const AuthContext = createContext<IAuthContext>({} as IAuthContext);
 
 export const AuthProvider = ({ children }: IAuthProvider) => {
-  // const secret = "6317d22a3c8fb9437f652a9d6196a455";
+  const localToken = localStorage.getItem("@token:fav");
 
-  const [token, setToken] = useState("");
+  const [token, setToken] = useState(localToken ? localToken : "");
+  const [isAuth, setIsAuth] = useState(token || localToken ? true : false);
+
+  const setAuthToken = (tokenToSet: string) => {
+    localStorage.setItem("@token:fav", tokenToSet);
+
+    setToken(tokenToSet);
+    setIsAuth((state) => !state);
+  };
 
   return (
-    <AuthContext.Provider value={{ token }}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={{ token, setAuthToken, isAuth }}>
+      {children}
+    </AuthContext.Provider>
   );
 };

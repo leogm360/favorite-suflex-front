@@ -1,3 +1,4 @@
+import { useMutation } from "@apollo/client";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
@@ -6,7 +7,6 @@ import { toast } from "react-toastify";
 import * as yup from "yup";
 import logo from "../../assets/img/favorites-logo.png";
 import { GeneralButton, Input } from "../../components";
-import { useClient } from "../../contexts";
 import { createUser } from "../../gql";
 import { Link } from "../../styles";
 import {
@@ -49,9 +49,7 @@ export const Register = () => {
     formState: { errors },
   } = useForm({ resolver: yupResolver(registerSchema) });
 
-  const { mutation } = useClient("fav");
-
-  const [mutateFunction, { data, error, loading }] = mutation(createUser);
+  const [mutateFunction, { data, error, loading }] = useMutation(createUser);
 
   const onSubmitForm = (formData: any) => {
     mutateFunction({

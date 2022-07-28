@@ -1,3 +1,3 @@
 export * from "./auth/useAuth";
-export * from "./client/useClient";
+export * from "./data/useData";
 export * from "./provider";

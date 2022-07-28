@@ -1,11 +1,13 @@
+import { useMutation } from "@apollo/client";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import * as yup from "yup";
 import logo from "../../assets/img/favorites-logo.png";
 import { GeneralButton, Input } from "../../components";
-import { useAuth, useClient } from "../../contexts";
+import { useAuth } from "../../contexts";
 import { loginUser } from "../../gql";
 import { Link } from "../../styles";
 import {
@@ -22,6 +24,12 @@ import {
 } from "./styles";
 
 export const Login = () => {
+  const navigate = useNavigate();
+
+  const { setAuthToken } = useAuth();
+
+  const [mutateFunction, { data, error, loading }] = useMutation(loginUser);
+
   const loginSchema = yup.object().shape({
     email: yup
       .string()
@@ -36,10 +44,6 @@ export const Login = () => {
     formState: { errors },
   } = useForm({ resolver: yupResolver(loginSchema) });
 
-  const { mutation } = useClient("fav");
-
-  const [mutateFunction, { data, error, loading }] = mutation(loginUser);
-
   const onSubmitForm = (formData: any) => {
     mutateFunction({
       variables: {
@@ -49,18 +53,19 @@ export const Login = () => {
     });
   };
 
-  const { token } = useAuth();
-
   useEffect(() => {
     if (data) {
+      setAuthToken(data.login.token);
+
       toast.success(
         "Login efetuado com sucesso, você será direcionado aos personagens."
       );
+
+      setTimeout(() => navigate("/home"), 6000);
     } else if (error) {
       toast.error("Email ou senha inválidos, tente novamente.");
     }
   }, [loading]);
-
   return (
     <Main>
       <Section>

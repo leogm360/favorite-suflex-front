@@ -1,18 +1,18 @@
+import { useQuery } from "@apollo/client";
 import { useState } from "react";
 import { AiFillCaretLeft, AiFillCaretRight } from "react-icons/ai";
 import { toast } from "react-toastify";
 import { CharactersList, Header, IconButton, Loader } from "../../components";
-import { useClient } from "../../contexts";
 import { getCharacters } from "../../gql";
+import { rickAndMortyClient } from "../../services";
 import { ButtonsContainer, Main } from "./styles";
 
 export const Home = () => {
   const [page, setPage] = useState(1);
 
-  const { query } = useClient("rick");
-
-  const { data, error, loading } = query(getCharacters, {
+  const { data, error, loading } = useQuery(getCharacters, {
     variables: { page },
+    client: rickAndMortyClient,
   });
 
   const next = () => {
@@ -55,11 +55,11 @@ export const Home = () => {
             <CharactersList characters={data.characters.results} />
 
             <ButtonsContainer>
-              <IconButton callback={previous}>
+              <IconButton onClick={() => previous()}>
                 <AiFillCaretLeft />
               </IconButton>
 
-              <IconButton callback={next}>
+              <IconButton onClick={() => next()}>
                 <AiFillCaretRight />
               </IconButton>
             </ButtonsContainer>

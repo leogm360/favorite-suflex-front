@@ -1,6 +1,16 @@
+import { useMutation } from "@apollo/client";
 import dateformat from "dateformat";
-import { useState } from "react";
-import { AiOutlineClose, AiOutlineHeart, AiOutlineInfo } from "react-icons/ai";
+import { useEffect, useState } from "react";
+import {
+  AiFillHeart,
+  AiOutlineClose,
+  AiOutlineHeart,
+  AiOutlineInfo,
+} from "react-icons/ai";
+import { toast } from "react-toastify";
+import { useData } from "../../contexts";
+import { EPISODE_URL, ORIGIN_LOCATION_URL } from "../../global-vars";
+import { addUserFavorite } from "../../gql";
 import { IconButton } from "../Buttons/IconButton/IconButton";
 import { ICharacter } from "../List/CharactersList";
 import {
@@ -20,9 +30,71 @@ interface ICharacterCard {
 }
 
 export const CharacterCard = ({ character }: ICharacterCard) => {
+  const { user, setUserData } = useData();
+
+  const [mutateFunction] = useMutation(addUserFavorite);
+
+  const [isFavorited, setIsFavorited] = useState(false);
+
   const [isOpen, seIsOpen] = useState(false);
 
   const openAndCloseModal = () => seIsOpen((state) => !state);
+
+  const favoriteCharacter = () => {
+    const origin = {
+      originName: character.origin.name,
+      originUrl: character.origin.id
+        ? ORIGIN_LOCATION_URL.replace("*", character.origin.id)
+        : "",
+    };
+
+    const location = {
+      locationName: character.location.name,
+      locationUrl: character.location.id
+        ? ORIGIN_LOCATION_URL.replace("*", character.location.id)
+        : "",
+    };
+
+    const episodes =
+      character.episode.length > 0
+        ? character.episode.map(({ id }) => {
+            return EPISODE_URL.replace("*", id);
+          })
+        : [];
+
+    mutateFunction({
+      variables: {
+        name: character.name,
+        status: character.status,
+        species: character.species,
+        type: character.type,
+        gender: character.gender,
+        origin,
+        location,
+        image: character.image,
+        episodes,
+        created: character.created,
+        userId: user.id,
+      },
+
+      onCompleted: (data) => {
+        toast.success("Personagem favoritado.");
+
+        setUserData(data.addFavorite);
+      },
+      onError: (error) => console.log(error),
+    });
+  };
+
+  useEffect(() => {
+    const favorited = user.favorites
+      ? user.favorites.some(({ name }) => name === character.name)
+      : false;
+
+    if (favorited) {
+      setIsFavorited((state) => !state);
+    }
+  }, [user]);
 
   return (
     <Container status={character.status}>
@@ -31,24 +103,24 @@ export const CharacterCard = ({ character }: ICharacterCard) => {
       <Name status={character.status}>{character.name}</Name>
 
       <ButtonsCardContainer>
-        <IconButton callback={openAndCloseModal}>
+        <IconButton type="button" onClick={() => openAndCloseModal()}>
           <AiOutlineInfo />
         </IconButton>
 
-        <IconButton className="button__fav">
-          <AiOutlineHeart />
+        <IconButton type="button" onClick={() => favoriteCharacter()}>
+          {isFavorited ? <AiFillHeart /> : <AiOutlineHeart />}
         </IconButton>
       </ButtonsCardContainer>
 
       {isOpen && (
         <Info status={character.status}>
           <ButtonsCloseContainer>
-            <IconButton callback={openAndCloseModal}>
+            <IconButton type="button" onClick={() => openAndCloseModal()}>
               <AiOutlineClose />
             </IconButton>
           </ButtonsCloseContainer>
           <Text>
-            <TextLeft>Nome:</TextLeft>
+            <TextLeft>Nome: </TextLeft>
             <TextRight>{character.name}</TextRight>
           </Text>
           <Text>
@@ -65,7 +137,7 @@ export const CharacterCard = ({ character }: ICharacterCard) => {
           </Text>
           <Text>
             <TextLeft>Quantidade de episódios: </TextLeft>
-            <TextRight> {character.id}</TextRight>
+            <TextRight> {character.episode.length}</TextRight>
           </Text>
           <Text>
             <TextLeft>Criação: </TextLeft>

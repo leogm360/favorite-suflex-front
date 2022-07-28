@@ -23,7 +23,7 @@ export const Header = () => {
         <Logo src={headerLogo} />
 
         <MenuContainer>
-          <IconButton callback={openAndCloseModal}>
+          <IconButton type="button" onClick={() => openAndCloseModal()}>
             <GiHamburgerMenu />
           </IconButton>
 

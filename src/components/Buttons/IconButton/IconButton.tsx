@@ -3,17 +3,8 @@ import { ButtonContainer } from "./styles";
 
 interface IIconButton extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: ReactNode;
-  classNme?: string;
-  callback?: () => void;
 }
 
-export const IconButton = ({ children, className, callback }: IIconButton) => {
-  return (
-    <ButtonContainer
-      className={className}
-      onClickCapture={() => (callback ? callback() : false)}
-    >
-      {children}
-    </ButtonContainer>
-  );
+export const IconButton = ({ children, ...rest }: IIconButton) => {
+  return <ButtonContainer {...rest}>{children}</ButtonContainer>;
 };
