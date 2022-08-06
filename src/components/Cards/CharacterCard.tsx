@@ -1,18 +1,12 @@
-import { useMutation } from "@apollo/client";
+import { useState } from "react";
+
 import dateformat from "dateformat";
-import { useEffect, useState } from "react";
 import {
   AiFillHeart,
   AiOutlineClose,
   AiOutlineHeart,
   AiOutlineInfo,
 } from "react-icons/ai";
-import { toast } from "react-toastify";
-import { useData } from "../../contexts";
-import { EPISODE_URL, ORIGIN_LOCATION_URL } from "../../global-vars";
-import { addUserFavorite } from "../../gql";
-import { IconButton } from "../Buttons/IconButton/IconButton";
-import { ICharacter } from "../List/CharactersList";
 import {
   ButtonsCardContainer,
   ButtonsCloseContainer,
@@ -24,77 +18,23 @@ import {
   TextLeft,
   TextRight,
 } from "./styles";
+import { useAuth, useData } from "../../contexts";
+import { addUserFavorite } from "../../graphql";
+import { IconButton } from "../Buttons/IconButton/IconButton";
+import { ICharacter } from "../List/CharactersList";
 
 interface ICharacterCard {
   character: ICharacter;
 }
 
 export const CharacterCard = ({ character }: ICharacterCard) => {
-  const { user, setUserData } = useData();
+  const { isAuth } = useAuth();
 
-  const [mutateFunction] = useMutation(addUserFavorite);
+  const { favorites, favoriteCharacter } = useData();
 
-  const [isFavorited, setIsFavorited] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
-  const [isOpen, seIsOpen] = useState(false);
-
-  const openAndCloseModal = () => seIsOpen((state) => !state);
-
-  const favoriteCharacter = () => {
-    const origin = {
-      originName: character.origin.name,
-      originUrl: character.origin.id
-        ? ORIGIN_LOCATION_URL.replace("*", character.origin.id)
-        : "",
-    };
-
-    const location = {
-      locationName: character.location.name,
-      locationUrl: character.location.id
-        ? ORIGIN_LOCATION_URL.replace("*", character.location.id)
-        : "",
-    };
-
-    const episodes =
-      character.episode.length > 0
-        ? character.episode.map(({ id }) => {
-            return EPISODE_URL.replace("*", id);
-          })
-        : [];
-
-    mutateFunction({
-      variables: {
-        name: character.name,
-        status: character.status,
-        species: character.species,
-        type: character.type,
-        gender: character.gender,
-        origin,
-        location,
-        image: character.image,
-        episodes,
-        created: character.created,
-        userId: user.id,
-      },
-
-      onCompleted: (data) => {
-        toast.success("Personagem favoritado.");
-
-        setUserData(data.addFavorite);
-      },
-      onError: (error) => console.log(error),
-    });
-  };
-
-  useEffect(() => {
-    const favorited = user.favorites
-      ? user.favorites.some(({ name }) => name === character.name)
-      : false;
-
-    if (favorited) {
-      setIsFavorited((state) => !state);
-    }
-  }, [user]);
+  const openAndCloseModal = () => setIsOpen((state) => !state);
 
   return (
     <Container status={character.status}>
@@ -107,9 +47,18 @@ export const CharacterCard = ({ character }: ICharacterCard) => {
           <AiOutlineInfo />
         </IconButton>
 
-        <IconButton type="button" onClick={() => favoriteCharacter()}>
-          {isFavorited ? <AiFillHeart /> : <AiOutlineHeart />}
-        </IconButton>
+        {isAuth && (
+          <IconButton
+            type="button"
+            onClick={() => favoriteCharacter(character)}
+          >
+            {favorites.includes(character.name) ? (
+              <AiFillHeart />
+            ) : (
+              <AiOutlineHeart />
+            )}
+          </IconButton>
+        )}
       </ButtonsCardContainer>
 
       {isOpen && (

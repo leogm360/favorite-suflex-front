@@ -1,8 +1,12 @@
-import { useQuery } from "@apollo/client";
 import jwtDecoder from "jwt-decode";
-import { createContext, memo, ReactNode, useState } from "react";
-import { retrieveUser } from "../../gql/favorite/retrieve-user.query";
+import { useMutation } from "@apollo/client";
+import { useQuery } from "@apollo/client";
+import { createContext, ReactNode, useState } from "react";
+import { retrieveUser } from "../../graphql/favorite/retrieve-user.query";
 import { useAuth } from "../auth/useAuth";
+import { ICharacter } from "../../components/List/CharactersList";
+import { addUserFavorite } from "../../graphql";
+import { toast } from "react-toastify";
 
 interface IDecoded {
   userId: string;
@@ -36,33 +40,82 @@ interface IUser {
 }
 
 interface IDataContext {
-  user: IUser;
-  setUserData: (data: IUser) => void;
+  user: IUser | undefined;
+  favorites: string[];
+  favoriteCharacter: (character: ICharacter) => void;
 }
 
 export const DataContext = createContext<IDataContext>({} as IDataContext);
 
-export const DataProvider = memo(({ children }: IDataProvider) => {
+export const DataProvider = ({ children }: IDataProvider) => {
+  const [addToFavorite] = useMutation(addUserFavorite);
+
   const { token } = useAuth();
 
-  const decoded: IDecoded = token ? jwtDecoder(token) : ({} as IDecoded);
+  const decoded: IDecoded | undefined = token ? jwtDecoder(token) : undefined;
 
-  const [user, setUser] = useState<IUser>({} as IUser);
+  const [user, setUser] = useState<IUser | undefined>(undefined);
 
-  useQuery(retrieveUser, {
+  const { refetch } = useQuery(retrieveUser, {
     variables: { id: decoded?.userId },
     onCompleted: (data) => {
       setUser(data.user);
     },
   });
 
-  const setUserData = (data: IUser) => {
-    setUser((state) => ({ ...state, ...data }));
+  let favorites = !!user ? user.favorites.map(({ name }) => name) : [];
+
+  const favoriteCharacter = (character: ICharacter) => {
+    const origin = {
+      originName: character.origin.name,
+      originUrl: character.origin.id
+        ? `https://rickandmortyapi.com/api/location/${character.origin.id}`
+        : "",
+    };
+
+    const location = {
+      locationName: character.location.name,
+      locationUrl: character.location.id
+        ? `https://rickandmortyapi.com/api/location/${character.location.id}`
+        : "",
+    };
+
+    const episodes =
+      character.episode.length > 0
+        ? character.episode.map(({ id }) => {
+            return `https://rickandmortyapi.com/api/episode/${id}`;
+          })
+        : [];
+
+    addToFavorite({
+      variables: {
+        name: character.name,
+        status: character.status,
+        species: character.species,
+        type: character.type,
+        gender: character.gender,
+        origin,
+        location,
+        image: character.image,
+        episodes,
+        created: character.created,
+        userId: user?.id,
+      },
+      onCompleted: (data) => {
+        refetch();
+
+        toast.success("Personagem favoritado.", { theme: "dark" });
+      },
+      onError: () =>
+        toast.success("Erro ao favoritarm, tente novamente.", {
+          theme: "dark",
+        }),
+    });
   };
 
   return (
-    <DataContext.Provider value={{ user, setUserData }}>
+    <DataContext.Provider value={{ user, favorites, favoriteCharacter }}>
       {children}
     </DataContext.Provider>
   );
-});
+};

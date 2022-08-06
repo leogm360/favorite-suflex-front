@@ -19,30 +19,16 @@ export const Logo = styled.img`
   height: 60px;
 `;
 
-export const MenuContainer = styled.div`
+export const MenusContainer = styled.div`
   position: relative;
   padding-right: 2rem;
 
   & > button {
     font-size: 1.5rem;
   }
-`;
 
-export const Menu = styled.nav`
-  position: absolute;
-  background: var(--color-primary);
-  padding: 1rem;
-  border-radius: 5px;
-  transform: translate(-2rem, 1rem);
-  z-index: 1;
-`;
-
-export const MenuList = styled.ul`
-  li + li {
-    padding-top: 1rem;
+  @media only screen and (min-width: 1024px) {
+    display: flex;
+    padding-right: 0;
   }
-`;
-
-export const MenuItem = styled.li`
-  color: var(--color-secondary);
 `;

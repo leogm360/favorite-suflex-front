@@ -20,7 +20,7 @@ export const RootStyles = createGlobalStyle`
         --body-text: normal 0.75rem 'Poppins';
 
         //WARNING: OVERRIDES TOASTFY DEFAULT COLOR BEHAVIOR
-        --toastify-color-dark: var(--grey-2);
+        --toastify-color-dark: var(--color-tertiary);
         --toastify-color-success: var(--success);
         --toastify-color-error: var(--negative);
     }

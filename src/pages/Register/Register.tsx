@@ -1,13 +1,9 @@
-import { useMutation } from "@apollo/client";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
 import * as yup from "yup";
 import logo from "../../assets/img/favorites-logo.png";
 import { GeneralButton, Input } from "../../components";
-import { createUser } from "../../gql";
+import { useAuth } from "../../contexts";
 import { Link } from "../../styles";
 import {
   Footer,
@@ -22,8 +18,14 @@ import {
   TopContainer,
 } from "./styles";
 
+interface IFormData {
+  email?: string;
+  name?: string;
+  password?: string;
+}
+
 export const Register = () => {
-  const navigate = useNavigate();
+  const { registerUser } = useAuth();
 
   const registerSchema = yup.object().shape({
     name: yup.string().required("Nome é obrigatório"),
@@ -49,29 +51,7 @@ export const Register = () => {
     formState: { errors },
   } = useForm({ resolver: yupResolver(registerSchema) });
 
-  const [mutateFunction, { data, error, loading }] = useMutation(createUser);
-
-  const onSubmitForm = (formData: any) => {
-    mutateFunction({
-      variables: {
-        email: formData.email,
-        name: formData.name,
-        password: formData.password,
-      },
-    });
-  };
-
-  useEffect(() => {
-    if (data) {
-      toast.success(
-        "Você se cadastrou com sucesso e será redirecionado para o login."
-      );
-
-      setTimeout(() => navigate("/login"), 5000);
-    } else if (error) {
-      toast.error("Erro ao cadastrar, tente novamente.");
-    }
-  }, [loading]);
+  const onSubmitForm = (formData: IFormData) => registerUser(formData);
 
   return (
     <Main>

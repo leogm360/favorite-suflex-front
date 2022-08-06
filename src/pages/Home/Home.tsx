@@ -3,14 +3,14 @@ import { useState } from "react";
 import { AiFillCaretLeft, AiFillCaretRight } from "react-icons/ai";
 import { toast } from "react-toastify";
 import { CharactersList, Header, IconButton, Loader } from "../../components";
-import { getCharacters } from "../../gql";
+import { getCharacters } from "../../graphql";
 import { rickAndMortyClient } from "../../services";
 import { ButtonsContainer, Main } from "./styles";
 
 export const Home = () => {
   const [page, setPage] = useState(1);
 
-  const { data, error, loading } = useQuery(getCharacters, {
+  const { data, loading } = useQuery(getCharacters, {
     variables: { page },
     client: rickAndMortyClient,
   });
@@ -22,7 +22,7 @@ export const Home = () => {
       const nextPage = next ? page + 1 : page;
 
       if (next != nextPage) {
-        toast.error("Não é possível avançar mais.");
+        toast.error("Não é possível avançar mais.", { theme: "dark" });
       }
 
       setPage((state) => (nextPage ? state + 1 : state));
@@ -36,7 +36,7 @@ export const Home = () => {
       const prevPage = prev ? page - 1 : page;
 
       if (prev != prevPage) {
-        toast.error("Não é possível retornar mais.");
+        toast.error("Não é possível retornar mais.", { theme: "dark" });
       }
 
       setPage(prevPage);
